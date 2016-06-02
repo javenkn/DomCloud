@@ -36,19 +36,49 @@ function getElements(elementArray){
 getElements(children);
 var objectKeys = Object.keys(domCloud);
 var sortedArray = [];
+
+//sorts through the object
 for(var i = 0; i < objectKeys.length; i++){
+  //inputs the objectKeys and the values into an array
+  //ex. [[HTML, 1]]
   sortedArray.push([objectKeys[i], domCloud[objectKeys[i]]]);
 }
+//sorts the sortedArray by decreasing order
 sortedArray.sort(function(a, b){return b[1]-a[1];});
 console.log(sortedArray);
+var valuesSoFar = [];
 for(var index = 0; index < sortedArray.length; index++){
   //creates element for div
   var childElement = document.createElement("div");
+
+  //creates a specific id for each childEleemnt div
+  childElement.setAttribute("id", "Div" + index);
+
 
   //sets the information into element through innerHTML
   childElement.innerHTML = sortedArray[index][0] + ": " + sortedArray[index][1];
 
   //appends childElement into the element div of id: dom_cloud_container
   document.getElementById("dom_cloud_container").appendChild(childElement);
+
 }
-console.log(domCloud);
+
+var sizeOfFont = 21; //starting font
+var dupArray = []; //duplicate array
+
+for(var k = 0; k < 20; k++){
+  //if the index of sortedArray[k][1] is not found
+  // the size of the font stays the same
+  if(dupArray.indexOf(sortedArray[k][1]) !== -1){
+    sizeOfFont = sizeOfFont;
+  }else{
+    //else the value gets pushed into the duplicate array
+    //and the size of the font decreases by 1
+    dupArray.push(sortedArray[k][1]);
+    sizeOfFont = sizeOfFont - 1;
+  }
+
+  //this gets the specific div and changes the fontsize according to the
+  //variable sizeOfFont
+  document.getElementById("Div" + k).style.fontSize = Math.round(sizeOfFont) + "px";
+}

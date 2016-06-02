@@ -9,7 +9,6 @@ function getElements(elementArray){
 
   //iterates through the given input parameter array
   for(var i = 0; i < elementArray.length; i++){
-    debugger;
 
     //creates the variable elementTag and assigns the tag name associated with
     //the child.
@@ -36,11 +35,20 @@ function getElements(elementArray){
 }
 getElements(children);
 var objectKeys = Object.keys(domCloud);
+var sortedArray = [];
 for(var i = 0; i < objectKeys.length; i++){
-  var childElement = document.createElement("header");
-  var h2 = document.createElement("h2");
-  h2.innerHTML = objectKeys[i] + ": " + domCloud[objectKeys[i]] + ", ";
-  childElement.appendChild(h2);
+  sortedArray.push([objectKeys[i], domCloud[objectKeys[i]]]);
+}
+sortedArray.sort(function(a, b){return b[1]-a[1];});
+console.log(sortedArray);
+for(var index = 0; index < sortedArray.length; index++){
+  //creates element for div
+  var childElement = document.createElement("div");
+
+  //sets the information into element through innerHTML
+  childElement.innerHTML = sortedArray[index][0] + ": " + sortedArray[index][1];
+
+  //appends childElement into the element div of id: dom_cloud_container
   document.getElementById("dom_cloud_container").appendChild(childElement);
 }
 console.log(domCloud);
